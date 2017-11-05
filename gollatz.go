@@ -1,8 +1,5 @@
 package main
 
-import (
-	"fmt"
-)
 func Collatz(n int64) bool{
 	for n > 1 {
 		if(n%2 == 0) {
@@ -16,15 +13,18 @@ func Collatz(n int64) bool{
 	return true
 }
 
-
-func main() {
-	workers := 30
+/*
+func benchmark(workers *int, maxInt int) {
 	guard := make(chan struct{}, workers)
-	for i := int64(1); ; i++{
+	for i := int64(1); i<maxInt; i++ {
 		guard <- struct{}{}
 		go func(n int64) {
-			fmt.Println(i, Collatz(n))
+			Collatz(n)
 			<-guard
 		}(i)
-	}
+
+
+func init() {
+	var workers = flag.Int("threads", 30, "Number of goroutines to use")
 }
+*/
