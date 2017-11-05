@@ -1,8 +1,9 @@
 package main
 
-import "fmt"
-
-func collatz(n int64) bool{
+import (
+	"fmt"
+)
+func Collatz(n int64) bool{
 	for n > 1 {
 		if(n%2 == 0) {
 			n = n/2
@@ -17,9 +18,13 @@ func collatz(n int64) bool{
 
 
 func main() {
-	var i int64
-	for {
-		fmt.Println(i,collatz(i))
-		i++
+	workers := 30
+	guard := make(chan struct{}, workers)
+	for i := int64(1); ; i++{
+		guard <- struct{}{}
+		go func(n int64) {
+			fmt.Println(i, Collatz(n))
+			<-guard
+		}(i)
 	}
 }
